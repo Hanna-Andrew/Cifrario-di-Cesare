@@ -1,95 +1,100 @@
+
 #include <stdio.h>
 #define DIM 100
 
-int main(){
+int main() {
     int mod;
     int K, i, lung;
     char testo[DIM], pos, c;
 
-    printf("Ave! Scegli la modalità:\n" 
-        "- Trascrizione testo in cifrario di Cesare (invia 0)\n"
-        "- Traduzione testo scritto in cifrario di Cesare (invia 1)\n");
+    printf("====================================\n");
+    printf("          CIFRARIO DI CESARE\n");
+    printf("====================================\n");
+    printf("Seleziona un'operazione:\n\n");
+    printf("[0] Cifra un testo\n");
+    printf("[1] Decifra un testo (chiave sconosciuta)\n\n");
+    printf("Scelta: ");
     scanf("%d", &mod);
 
-    if(mod==0) { // MOD trascrizione
+    if (mod == 0) { // CIFRATURA
 
-        printf("Inserisci il numero chiave:\n");
+        printf("\n--- CIFRATURA ---\n");
+
+        printf("Inserisci la chiave numerica: ");
         scanf("%d", &K);
 
-
-        printf("Inserisci un testo usando il cifrario di Cesare con %d chiave:\n", K);
+        printf("Inserisci il testo da cifrare:\n");
         scanf(" %99[^\n]", testo);
 
-        for(lung = 0; testo[lung] != '\0'; lung++);
+        for (lung = 0; testo[lung] != '\0'; lung++);
 
-        
-        for(i=0; i<lung; i++){
+        printf("\nTesto cifrato:\n");
 
-            if(testo[i] >= 'a' && testo[i] <= 'z'){  //Verifica lettera e non altro
-                
-                pos = (testo[i] - 'a' + K)%('z' - 'a' + 1);
+        for (i = 0; i < lung; i++) {
+
+            if (testo[i] >= 'a' && testo[i] <= 'z') {
+
+                pos = (testo[i] - 'a' + K) % 26;
                 testo[i] = 'a' + pos;
 
                 printf("%c", testo[i]);
 
+            } else if (testo[i] >= 'A' && testo[i] <= 'Z') {
 
-            }else if(testo[i] >= 'A' && testo[i] <= 'Z') { 
-
-                pos = (testo[i] - 'A' + K)%('Z' - 'A' + 1);
+                pos = (testo[i] - 'A' + K) % 26;
                 testo[i] = 'A' + pos;
 
-                printf("%c", testo[i] );
+                printf("%c", testo[i]);
 
-
-            }else {
-                printf("%c", testo[i] );
+            } else {
+                printf("%c", testo[i]);
             }
+        }
 
-    } printf("\n");
+        printf("\n");
 
-//
+    } else if (mod == 1) { // DECIFRATURA
 
-    } else{ // MOD traduzione
+        printf("\n--- DECIFRATURA ---\n");
 
-        printf("Inserisci un testo di %d usando il cifrario di Cesare con k chiave:\n", DIM-1);
+        printf("Inserisci il testo da decifrare:\n");
         scanf(" %99[^\n]", testo);
 
-        for(lung = 0; testo[lung] != '\0'; lung++);
+        for (lung = 0; testo[lung] != '\0'; lung++);
 
-        for(K=0; K<=('z' - 'a'); K++){
-            
-            printf("Traduzione con chiave %d: ", (26-K)%26);
+        printf("\nPossibili traduzioni:\n\n");
 
-            for(i=0; i<=lung; i++){
+        for (K = 0; K < 26; K++) {
 
-                if(testo[i] >= 'a' && testo[i] <= 'z'){  //Verifica lettera e non altro
-                    
-                    pos = (testo[i] - 'a' + K)%('z' - 'a' + 1);
-                    
+            printf("Chiave %2d: ", (26 - K) % 26);
+
+            for (i = 0; i < lung; i++) {
+
+                if (testo[i] >= 'a' && testo[i] <= 'z') {
+
+                    pos = (testo[i] - 'a' + K) % 26;
                     c = 'a' + pos;
+
                     printf("%c", c);
 
+                } else if (testo[i] >= 'A' && testo[i] <= 'Z') {
 
-                }else if(testo[i] >= 'A' && testo[i] <= 'Z') { 
-
-                    pos = (testo[i] - 'A' + K)%('Z' - 'A' + 1);
-                    
+                    pos = (testo[i] - 'A' + K) % 26;
                     c = 'A' + pos;
+
                     printf("%c", c);
 
-
-                }else {
-                    printf("%c", testo[i] );
+                } else {
+                    printf("%c", testo[i]);
                 }
             }
 
             printf("\n");
         }
+
+    } else {
+        printf("\nScelta non valida. Seleziona 0 oppure 1.\n");
     }
 
-	return 0;
+    return 0;
 }
-
-
-
-
